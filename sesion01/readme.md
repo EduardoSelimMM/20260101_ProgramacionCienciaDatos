@@ -46,11 +46,14 @@ Por ejemplo,
 -   R: `mi_funcion <- function(x) x^2`
 -   Python: `def mi_funcion(x): return x**2`
 
-Ambos soportan varios paradigmas:
+Ambos soportan varios paradigmas de programación:
 
--   Imperativo / procedural
--   Funcional (map, reduce, apply, list comprehensions, purrr, etc.)
--   Orientado a objetos
+-   **Imperativo / procedural**
+     + El paradigma imperativo en programación es un enfoque que describe los pasos detallados, de forma secuencial, que una computadora debe seguir para alcanzar un resultado, centrándose en el "cómo" se deben hacer las cosas
+     + El paradigma procedural (o procedimental) es un enfoque imperativo basado en la estructuración del código en bloques reutilizables llamados procedimientos, funciones o subrutinas.
+   
+-   **Funcional** (map, reduce, apply, list comprehensions, purrr, etc.)
+-   **Orientado a objetos**
 
 Aunque con diferencias:
 
@@ -58,3 +61,57 @@ Aunque con diferencias:
 -   Python: clases "clásicas" (... específicas de Python)
 -   Pero en la práctica, en data science se usan de forma híbrida.
 
+Administración de paquetes y comunidades abiertas:
+
+-   Repositorios "centrales": R a su `CRAN` y Python a su `PyP`
+-   **Crecen a placer/necesidad de la persona usuaria**
+-   Les da más versatilidad: limpieza de datos, graficación, ajustes de modelos, etc.
+-   Esto quiere decir que son extendibles, i.e. se agregran funcionalidades a través de bibliotecas/librerías
+-   Lo más ordenado y funcional es escribir funcionalidades particulares y distribuirlas a partir de bibliotecas/librerías
+-   Muchos métodos estadísticos "recientes" se publican conjuntamente con una biblioteca de R y/o Python.
+
+Para análisis de datos y estadística:
+
+-   R: `stats`, `lme4`, `mgcv`, `survival`
+-   Python: `scipy`, `statsmodels`, `pymc`
+
+Para machine learning:
+
+-   R: `caret`, `mlr3`, `xgboost`, `randomForest`
+-   Python: `scikit-learn`, `xgboost`, `lightgbm`, `tensorflow`, `pytorch`
+
+Ambos están diseñados para:
+
+- Quizá esta es la característica más importante con respecto a desempeño
+-   Operar sobre vectores, matrices y arreglos de forma eficiente.
+-   Minimizar ciclos explícitos.
+
+Esta herencia de estar vectirizados, viene de:
+
+-   R: S / estadística... S era un software estadístico privados desarrallodo por Ithaka
+-   Python científico: NumPy/SciPy (inspirados en MATLAB y R)
+
+Sistemas estándar de instalación:
+
+-   R: `install.packages()`
+-   Python: `pip`, `conda`
+
+Integración con C/C++/Fortran para alto rendimiento
+
+-   Llamar código en C/C++/Fortran para acelerar partes críticas.
+-   R: Rcpp, .Call
+-   Python: cython, ctypes, numba
+-   Muchas librerías populares están escritas en C/C++ debajo.
+-   Se pueden conectar con otros lenguajes
+-   En particular, se han hecho esfuerzos adicionales para conectarlos con sistemas de base de datos. Por ejemplo, los paquetes `RODBC` que lee bases de datos usando el Open Database Connectivity protocol (ODBC) y `ROracle` para leer bases de datos.
+-   Gráficos bastante bonitos. Por ejemplo, el departamento gráfico del New York Times usa R.
+
+  Soporte fuerte para reproducibilidad:
+
+-   Notebooks:
+    -   R: RMarkdown, Quarto
+    -   Python: Jupyter
+-   Control de versiones con Git
+-   Entornos reproducibles:
+    -   R: `renv`, `packrat`
+    -   Python: `venv`, `conda`, `poetry`
