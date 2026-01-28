@@ -115,3 +115,57 @@ Integración con C/C++/Fortran para alto rendimiento
 -   Entornos reproducibles:
     -   R: `renv`, `packrat`
     -   Python: `venv`, `conda`, `poetry`
+
+# Instalación
+
+-   R y RStudio en Windows https://youtu.be/fu_K\_69BDbw?si=fRTORmtNi5ktcbxC
+
+-   R y RStudio en Mac https://youtu.be/EosOpvabcac?si=uAxyAgXA9wttHMOJ
+
+-   R y RStudio en Ubuntu (Linux) https://youtu.be/DGCEFBpkLjM?si=5mxIuZA6P15gqO-R
+
+-   Python en Windows https://youtu.be/QvQgKagWKYk?si=nFUUNv0HXNd9ArRh
+
+-   Python en Mac https://youtu.be/VJjeMdl6yWA?si=14TZtM_fYn5an7ON
+
+-   Python en Ubuntu (Linux) https://youtu.be/m7kDHhuSqVg?si=D5Y8pDD4GUgECGe5
+
+-   Crearse una cuenta en Posit Cloud: https://posit.cloud/
+
+-   Crearse una cuenta de Google y con eso ya tiene una de Google Colab
+
+Tareita para el próximo jueves: Instalar R, RStudio, Python y crearse las cuentas de Posit Cloud y Google Colab
+
+# ¿Dónde tiramos líneas de código?
+
+-   R y Python: En la línea de comando/terminal de nuestra computadora
+
+### Para tirar código de R
+
+-   La consola de R (no lo recomiendo)
+-   El editor básico de R (no lo recomiendo... cuesta trabajito hacer REPL)
+-   RStudio en mi propia compu (sí lo recomiendo)
+-   RStudio Cloud... RStudio en la nube... Sí lo recomiendo para los 3 módulos
+-   VS Code (Visual Studio Code)
+-   Emacs y Emacs + ESS (Emacs Speaks Statistics)
+-   Vim (con plugins Nvim + R plugins)
+-   Jupyter Notebook / JupyterLab (sí recomiedo)
+-   Sublime Text
+
+### Para tirar código de Python
+
+-   IDLE (el básico que viene con Python) (no lo recomiendo... cuesta trabajito hacer REPL)
+-   Jupyter Notebook / JupyterLab
+-   RStudio
+-   RStudio Cloud
+-   VS Code (Visual Studio Code)
+-   PyCharm (si sólo quieren hacer Python)
+-   Spyder
+-   Binder / Kaggle Notebooks
+-   Atom
+-   Sublime Text
+
+### Para tirar código de Python y R conjuntamente
+
+RStudio con Quarto o Jupyter Notebook / JupyterLab
+
