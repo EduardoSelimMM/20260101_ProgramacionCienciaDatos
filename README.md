@@ -10,4 +10,6 @@
 
 ## Sesiones 
 - [Sesion 1: 27 de enero de 2026](./sesion01)
+- [Sesion 2: 29 de enero de 2026](./sesion02)
+- [Sesion 2: 31 de enero de 2026](./sesion03)
 - [Indicaciones: Proyecto final del módulo](./proyecto)
