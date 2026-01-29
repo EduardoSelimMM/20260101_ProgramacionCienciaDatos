@@ -122,3 +122,113 @@ sqrt(9) # La raíz cuadrada de nueve
 ```{r}
 tan(sqrt(abs(sin(3.6))))
 ```
+
+```{r}
+3.6 |> sin() |> abs() |> sqrt() |> tan()
+```
+
+```{r}
+mi_vector1 <- c(2, 7, 9)
+mi_vector2 <- c(3, 1, 6)
+mi_vector3 <- c(8, 9)
+```
+
+```{r}
+mi_vector1
+mi_vector2
+mi_vector3
+```
+
+```{r}
+mi_vector1 + mi_vector2
+```
+
+```{r}
+otro_vector <- c(mi_vector1, mi_vector2) 
+otro_vector
+```
+
+```{r}
+vector_mounstro <- c(4, "Hola mundo", TRUE, pi)
+vector_mounstro
+```
+
+```{r}
+simpsons <- c("Homero","Marge","Bart","Lisa","Maggie")
+simpsons
+```
+
+```{r}
+length(simpsons)
+```
+
+```{r}
+simpsons[3]
+```
+
+```{r}
+simpsons[2:4]
+```
+
+```{r}
+names(simpsons) <- c("papá","mamá","hijo","hija mayor","hija menor")
+simpsons
+```
+
+```{r}
+simpsons_con_vecino <- c(simpsons,"Flanders")
+simpsons_con_vecino
+```
+
+```{r}
+x <- 1:30
+x
+```
+
+```{r}
+1:10-1
+```
+
+```{r}
+1:(10-1)
+```
+
+```{r}
+seq(length=9, from=1, to=5)
+```
+
+```{r}
+seq(length=11, from=1, to=5)
+```
+
+```{r}
+seq(1, 5, 0.5)
+```
+
+```{r}
+seq(from = 1,to = 5, by = 0.5)
+```
+
+```{r}
+rep(1, 30)
+```
+
+```{r}
+rep(x = 1, times = 30)
+```
+
+```{r}
+rep(x = c(1,3,8), times = 7)
+```
+
+```{r}
+sequence(4:8)
+```
+
+```{r}
+sequence(c(10,5))
+```
+
+```{r}
+sequence(6)
+```
