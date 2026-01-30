@@ -15,7 +15,7 @@ Tipos atómicos básicos: Los objetillos más elementales
 + `integer`: Números enteros -3, 7, 10000, 5, etc.
 + `logical`: Valores booleanos -> TRUE y FALSE (también se vale 1 y 0)
 + `character`: Cadenas de caracteres a.k.a strings, "hola", "hola mundo", "palabrejas"
-+ `complex: Numeros complejos -> a + ib, 7+ 8i, 78.9 + 43i, etc.
++ `complex`: Numeros complejos -> a + ib, 7+ 8i, 78.9 + 43i, etc.
 + `NULL`: Representa ausencia de objeto
 + `NA`: faltante... 'Not Available'
 + `NaN`: indeterminado... 'Not a Number'
