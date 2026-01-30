@@ -1,0 +1,326 @@
+---
+title: "Sesión 2"
+author: "Su nombre"
+date: "2026-01-29"
+output: html_document
+---
+
+## Algunas particularidades de R
+
++ Se dice que la naturaleza de `R` es doble: la de programa y la de lenguaje de programación; y es considerado como un dialecto del lenguaje `S` creado por los Laboratorios AT&T Bell.
+
++ La sesión pasada ya dijimos que `R` se distribuye gratuitamente bajo los términos de la *GNU (General Public Licence)*; su desarrollo y distribución son llevados a cabo por varios estadísticos conocidos como el *Grupo Nuclear de Desarrollo de R*.
+
++ Los archivos necesarios para instalar `R` se distribuyen desde el sitio de internet del *Comprehensive R Archive Network (CRAN)* junto con las instrucciones de instalación.
+
++ Como ya se dijo... `R` crece a placer del usuario a través de librerías/bibliotecas:
+
+```         
+install.packages("nombre_de_la_librería") # Sólo se hace una vez (es una instalación local)
+
+library(nombre_de_la_librería) # Se manda a llamar a las funciones de la librería
+```
+Por ejemplo,
+
+```{r}
+# Esto se hace una única vez
+#install.packages("ggplot2")
+```
+
+Para mandar llamar las funcionalidades de la librería que recién instalé
+
+```{r}
+library(ggplot2)
+```
+
+## Empecemos con tantito de R
+
++ **Posit** (antes RStudio) es una empresa que se dedica a desarrollo de diferentes productos basados en R (y recientemente también en Python)
+
++ Su principal "producto" es un editor... que se llama **RStudio**
+
++ **Posit** como empresa, es de los principales contribuidores de funcionalidades en R y uno de sus objetivos también es formar comunidad
+
+# Empecemos a tirar tantito código R
+
+## Creación de objetos
+
+Un objeto se puede ser crear con el operador "asignar" (`->`), que se denota como una flecha con el signo menos (`-`) y el símbolo `>` o `<` dependiendo de la dirección en que asigna el objeto:
+
+```{r}
+n <- 15
+n
+```
+El sentido de la flecha es importante
+
+```{r}
+5 -> n
+n
+```
+En `R` hay distinción entre mayúsculas y minúsculas para los nombres de los objetos
+
+```{r}
+x <- 1
+X <- 10
+x
+X
+```
+
+```{r}
+x
+```
+
+```{r}
+X
+```
+
++ Pero también podemos usar el símbolo `=` en vez de la flechita
+
+```{r}
+a = 8
+a
+```
+
+```{r}
+# 8 como número ya existe (derecha) y lo quieres asignar a un objeto
+# nuevo y (izquierda)
+y = 8
+# Si quisieras actualizar el valor de y
+# Actualiza el valor de y
+# tomar lo de la derecha y asignalo a la variable de la izquierda
+y = 2*y + 7
+y
+```
+
+```{r}
+y = 2*y + 7
+y
+```
+Había más objetos
+
+```{r}
+mi_booleano_favorito <- TRUE
+mi_booleano_favorito
+```
+
+```{r}
+nombre_de_la_variable <- "Hola mundo"
+nombre_de_la_variable
+```
+
+```{r}
+mi_complejo <- 7 + 8i
+mi_complejo
+```
+
+```{r}
+class(mi_complejo)
+```
+
+```{r}
+class(nombre_de_la_variable)
+```
+
+```{r}
+# Otra manera de crear número complejos
+z <- complex(real = 7, imaginary = 19)
+z
+```
+
+```{r}
+a <- NA
+a
+```
+
+```{r}
+b <- NULL
+b
+```
+
+
+
+
+
+
+
+
+
+## Asignación con `=` versus `<-`
+
++ La asignación `=` puede causar confusión si se trata de entender la sintaxis como una ecuación matemática. Si se escribe 
+`x = 2*x + 1` 
+como una ecuación matemática
+
+$$x = 2x + 1$$
+
+ésta tiene una única solución, que es $x=-1$.
+
++ Sin embargo, en `R`, la misma expresión `x = 2*x + 1`, se interpreta como asignar el valor de `2*x+1` a la variable `x`.
+
++ Esto actualiza el valor previo de `x`. Así si `x` tiene el valor de 2 antes de esta línea, esta instrucción la deja con un valor de 5 (pues $2*2 + 1 = 5$).
+
++ Este tipo de confusión se puede minimizar usando los operadores `<-` y `->`.
+
++ La expresión en `R`, `x <- 2*x + 1` hace que visualmente la confusión sea menor, y la dirección de la flecha aclará aún más la actualización del valor de $x$.
+
+```{r}
+x <- 2
+x <- 2*x + 1
+x
+```
+
+```{r}
+class(5)
+```
+
+```{r}
+class(5.674)
+```
+
+```{r}
+class("Hola")
+```
+
+```{r}
+class(TRUE)
+```
+
+## R como calculadora
+
+```{r}
+5 + 8
+```
+
+```{r}
+5 * 8
+```
+
+```{r}
+2^5
+```
+
+```{r}
+sqrt(9) # La raíz cuadrada de nueve
+```
+
++ Una característica que hace más "legible" al código de `R` es el operador de pipeline `|>`
+
+```{r}
+9 |> sqrt() # La raíz cuadrada de nueve
+```
+
++ Es útil pues se puede poner feo el código
+
+```{r}
+tan(sqrt(abs(sin(3.6))))
+```
+
+```{r}
+3.6 |> sin() |> abs() |> sqrt() |> tan()
+```
+
+```{r}
+mi_vector1 <- c(2, 7, 9)
+mi_vector2 <- c(3, 1, 6)
+mi_vector3 <- c(8, 9)
+```
+
+```{r}
+mi_vector1
+mi_vector2
+mi_vector3
+```
+
+```{r}
+mi_vector1 + mi_vector2
+```
+
+```{r}
+otro_vector <- c(mi_vector1, mi_vector2) 
+otro_vector
+```
+
+```{r}
+vector_mounstro <- c(4, "Hola mundo", TRUE, pi)
+vector_mounstro
+```
+
+```{r}
+simpsons <- c("Homero","Marge","Bart","Lisa","Maggie")
+simpsons
+```
+
+```{r}
+length(simpsons)
+```
+
+```{r}
+simpsons[3]
+```
+
+```{r}
+simpsons[2:4]
+```
+
+```{r}
+names(simpsons) <- c("papá","mamá","hijo","hija mayor","hija menor")
+simpsons
+```
+
+```{r}
+simpsons_con_vecino <- c(simpsons,"Flanders")
+simpsons_con_vecino
+```
+
+```{r}
+x <- 1:30
+x
+```
+
+```{r}
+1:10-1
+```
+
+```{r}
+1:(10-1)
+```
+
+```{r}
+seq(length=9, from=1, to=5)
+```
+
+```{r}
+seq(length=11, from=1, to=5)
+```
+
+```{r}
+seq(1, 5, 0.5)
+```
+
+```{r}
+seq(from = 1,to = 5, by = 0.5)
+```
+
+```{r}
+rep(1, 30)
+```
+
+```{r}
+rep(x = 1, times = 30)
+```
+
+```{r}
+rep(x = c(1,3,8), times = 7)
+```
+
+```{r}
+sequence(4:8)
+```
+
+```{r}
+sequence(c(10,5))
+```
+
+```{r}
+sequence(6)
+```
