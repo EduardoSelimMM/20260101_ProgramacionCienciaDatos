@@ -1,0 +1,26 @@
+---
+title: "Mi fabuloso primer notebook"
+author: "Yo mero"
+date: "2026-01-30"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+La magia de estos documentos/notebooks es que puedes combinar español, con un poquito de matemáticas en LaTeX
+
+$$p(x) = a_0 + a_1x + a_2x^2 + \ldots + a_nx^n$$
+
+$$x = \frac{-b \pm \sqrt{b^2 -4ac}}{2a}$$
+
+Pero más importate incluir código y ejecutarlo aquí mismo. Esto se hace a partir de chunks de código
+
+```{r}
+# Para comentarios en código R usamos el #
+# Aquí voy a escribir mi código
+print("Hola mundo")
+```
+
+
+
