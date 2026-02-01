@@ -118,7 +118,7 @@ Integración con C/C++/Fortran para alto rendimiento
 
 # Instalación
 
--   R y RStudio en Windows https://youtu.be/fu_K\_69BDbw?si=fRTORmtNi5ktcbxC
+-   R y RStudio en Windows https://youtu.be/6bM-Gy78PrY?si=VTy3uXHBA4tFnliZ
 
 -   R y RStudio en Mac https://youtu.be/EosOpvabcac?si=uAxyAgXA9wttHMOJ
 
