@@ -1,3 +1,14 @@
+---
+title: "Sesión 04"
+author: "Mi nombre"
+date: "2026-02-03"
+output: html_document
+---
+
+# Matrices en R
+
++ La sesión pasada nos quedamos en matrices
+
 + A continuación se mostrará cómo se construye a partir de un vector de 10 ceros una matriz:
 
 ```{r}
@@ -37,16 +48,6 @@ m1
 ```{r}
 m2 <- matrix(data = c(2,6,7,8), nr = 2, nc = 2)
 m2
-```
-
-```{r}
-matrix(data = c(2,6,7,8,3), nr = 2, nc = 2)
-```
-```{r}
-matrix(data = c(2,6,7,8,3), nr = 2, nc = 3)
-```
-```{r}
-matrix(data = c(2,6,7,8,3), nr = 3, nc = 3)
 ```
 
 + Para acceder a la entrada $a_{2,3}$ (renglón 2 y columna 3) y modificarla:
@@ -207,7 +208,6 @@ mat1
 ```{r}
 mat2
 ```
-
 
 ```{r}
 rbind(mat1, mat2) #apilar por renglones las matrices mat1 y mat2
