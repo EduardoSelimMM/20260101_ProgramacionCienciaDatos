@@ -13,3 +13,4 @@
 - [Sesion 2: 29 de enero de 2026](./sesion02)
 - [Sesion 3: 31 de enero de 2026](./sesion03)
 - [Sesion 4: 3 de febrero de 2026](./sesion04)
+- [Sesion 4: 5 de febrero de 2026](./sesion05)
