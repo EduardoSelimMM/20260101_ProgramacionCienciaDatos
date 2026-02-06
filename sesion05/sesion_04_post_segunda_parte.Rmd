@@ -1,0 +1,1137 @@
+---
+title: "Sesión 04"
+author: "Mi nombre"
+date: "2026-02-03"
+output: html_document
+---
+
+# Matrices en R
+
++ La sesión pasada nos quedamos en matrices
+
++ A continuación se mostrará cómo se construye a partir de un vector de 10 ceros una matriz:
+
+```{r}
+a <- rep(x= 0,times = 10)
+a
+```
+
++ Para convertir al objeto `a` en una matriz de $2\times5$, se utiliza la función `dim()`:
+
+Básicamente lo que esta función es establecer la dimensión del objeto
+
+```{r}
+dim(a) <- c(2,5) # Quiero que la dimensión de a sea de 2 x 5
+a
+```
+
++ Veamos qué tipo de objeto es este
+
+```{r}
+class(a)
+```
+
+```{r}
+# Para conocer un poquito la estructura del objeto a
+str(a)
+```
+
++ Otra manera de construir matrices es utilizando la función `matrix()`
+
++ Para generar una matriz de $2\times2$ con valor 1:
+
+```{r}
+m1 <- matrix(data = 1, nr = 2, nc = 2) # nr = número de renglones y nc= número de columnas
+m1
+```
++ Podemos ser más versátiles con lo que queremos que tenga la matriz:
+
+```{r}
+m2 <- matrix(data = c(2,6,7,8), nr = 2, nc = 2)
+m2
+```
+
++ OJO: Cuando le damos un vector para que lo intente convertir en matriz, empieza a acomodar las entradas del vector en las columnas de la matriz
+
++ Para acceder a la entrada $a_{2,3}$ (renglón 2 y columna 3) y modificarla:
+
+Quiero cambiar la entrada 2,3 por el valor de 8
+
++ Ocupamos la notación de corchetes cuadratos ---> [i,j]: i es el reglón y j es la columna
+
+```{r}
+# La entrada que está en el renglón 2 y columna 3, la voy a cambiar por el valor de 8
+a[2,3] <- 8
+a
+```
++ Es decir, para explorar las entradas de una matriz, usamos los paréntesis cuadrados [,]
+
++ Podemos modicar toda una columna de "golpe" no entrada por entrada
+
++ Para modificar toda la columna 5:
+
+```{r}
+a[,5] <- c(2,2) # se suele leer "todo renglón, columna 5", "cualquier renglón
+# columna 5
+a
+```
+
++ Por supuesto, también puedo cambiar todo un renglón de "golpe" también usando los corchetes cuadrados
+
+```{r}
+# Si quiero cambiar todo el renglón 1
+a[1,] <- c(1,6,7,10,56)
+a
+```
+
++ Evidentemente esta forma de hacer cambios en la matrix, requiere de saber las dimensiones de la matriz, para que lo que voy a cambiar tenga sentido en dimensiones
+
+```{r}
+dim(a)
+```
+
++ Una característica que a algunas programadoras les parecer agradable es que forza las dimensiones
+
++ Supongamos que queremos cambiar TODO el renglón 2 de la matriz `a` pero le pasamos un objeto más grande
+
+```{r}
+a
+```
+
+
+```{r}
+#a[2,] <- c(10, 9, 8, 1, 5, 6, 34)
+#a
+# Esto nos marco el error
+#Error in a[2, ] <- c(10, 9, 8, 1, 5, 6, 34) : 
+#  number of items to replace is not a multiple of replacement length
+```
++ Vamos a ver cuando le meto un vector de longitud más pequeña de lo que espera
+
+```{r}
+a
+```
+
+```{r}
+#a[2,] <- c(23, 51)
+#a
+#Error in a[2, ] <- c(23, 51) : 
+#  number of items to replace is not a multiple of replacement length
+```
+
+```{r}
+a[2,] <- 45
+a
+```
+
+Otro ejemplo
+
+```{r}
+b <- matrix(5, nrow = 4, ncol = 6)
+b
+```
+
+```{r}
+b[,3] <- c(2,7)
+b
+```
+
+```{r}
+b[3,] <- c(1,2,3)
+b
+```
+
+Ahora en R las matrices también pueden tener entradas string:
+
+```{r}
+b <- matrix(data = c("Hola", "mundo", "feliz", "a veces"), nrow = 2, ncol = 2)
+b
+```
++ También podrían crear una matriz, con todas las entradas boolenas
+
+```{r}
+matriz_bool <- matrix(data = c(T,T,T,F), ncol = 2, nrow=2)
+matriz_bool
+```
+
+```{r}
+matriz_de_complejos <- matrix(data = c(1+1i, 3+5i, 8+7i, 9+25i),
+                              nrow = 2, ncol =2)
+matriz_de_complejos
+```
+
+```{r}
+str(matriz_de_complejos)
+```
+
++ De nuevo, el tipo string tiene "prioridad". Es decir, con que al menos haya una entrada string, todas las demás lo serán
+
+```{r}
+d <- matrix(data = c("Hola", TRUE, "feliz", 7), nrow = 2, ncol = 2)
+d
+```
+
++ Paréntesis: Podemos convertir un "string" que tiene potencial de ser un número con la función `as.numeric`:
+
+```{r}
+mi_numero <- as.numeric("3.1416")
+mi_numero
+class(mi_numero)
+```
+```{r}
+as.numeric("3.1416") |> class()
+```
++ Evidentemente, no todo string tiene potencial de ser un número
+
+```{r}
+as.numeric("Hola")
+```
+
++ NA: Se le como Not Available, pero es más fácil si lo interpretamos como "no sé"
+
++ Aprovecho para hablarles de los NA
+
+```{r}
+5 * 3
+# 15
+```
+
+```{r}
+5 * NA
+```
+
+```{r}
+5 + NA
+```
+
++ Ya habíamos dicho las sesiones pasadas, que los booleanos si tienen representación numérica: TRUE = 1, FALSE = 0
+
+```{r}
+as.numeric(TRUE)
+```
+```{r}
+as.numeric(FALSE)
+```
++ De hecho, como buenos número que son, los podemos operar
+
+```{r}
+TRUE + TRUE
+```
+pues se interpreta como 1+1
+
+```{r}
+5*FALSE
+```
+pues interpreta como 5*0
+
++ Y por supuesto también podemos ir de regreso, i.e. convertir números/booleanos/NAs en strings. Esto se hace con la función `as.character`
+
+```{r}
+u <- c(1,5,7,8) # El objeto u es un vector númerico
+u_string <- as.character(u) # Lo voy a convertir en vector de strings
+u_string |> class()
+```
++ Antes de irnos del mundo de matrices, como las operamos las matrices numéricas, entiéndase sumar, restar, multiplicar, sacar la inversa, sacar la transpuesta.
+
++ Como en Álgebra Lineal
+
+```{r}
+mat1 <- matrix(data = c(1,9,0,5), nrow = 2, ncol = 2)
+mat2 <- matrix(data = c(3,4,5,6), nrow = 2, ncol = 2)
+mat3 <- matrix(data = c(9,8,7,6,5,4), nrow = 3, ncol = 2)
+mat1
+mat2
+mat3
+```
++ Podemos sumarlas (cuando las dimensiones sean las adecuadas por supuesto)
+
+```{r}
+mat1 + mat2
+```
++ ¿Qué pasa si las dimensiones no son adecuadas?
+
+```{r}
+# mat1 + mat3
+# Error in mat1 + mat3 : non-conformable arrays
+```
+
++ Podemos multiplicarlas  (cuando las dimensiones sean las adecuadas por supuesto)
+
++ Recordatorio: (m x n) x (n x p) ---> (m x p)
+
++ La multiplicación matricial tiene un símbolo especial: `%*%`
+
+```{r}
+# (2 x 2) x (2 x 2) --> (2 x 2)
+mat1 %*% mat2
+```
+
++ OJO: La multiplicación de matrices se hace con el símbolo %*%
+
++ Recordemos que la multiplicación de matrices no es conmutativa
+
+```{r}
+mat2 %*% mat1
+```
++ ¿Qué pasa si las dimensiones no concuerdan?
+
+```{r}
+# mat1 es de 2 x 2
+# mat3 es de 3 x 2
+# mat1 %*% mat3 # Me manda un error
+# Error in mat1 %*% mat3 : non-conformable arguments
+```
++ La operación que sí se vale es
+
+```{r}
+mat3 %*% mat1
+```
+
++ ¿Qué otra cosa quisieran hacer con matrices?
+
++ Transpuesta
+
+```{r}
+mat3
+```
+
++ Se hace con la función `t()`
+
+```{r}
+t(mat3)
+```
++ Nos gustaría también la inversa (cuando exista). Para encontrar la inversa de matrices cuadradas usamos la función ´solve()´
+
+```{r}
+mat1
+```
+
+
+```{r}
+# La inversa de la matriz mat1
+solve(mat1)
+```
+```{r}
+mat2
+```
+
+
+```{r}
+# La inversa de la matriz mat2
+solve(mat2)
+```
+
+```{r}
+mat_maniosa <- matrix(data = c(3,3,4,4), nrow=2, ncol=2)
+mat_maniosa
+```
+¿Qué pasa si quiero su inversa?
+
+```{r}
+#solve(mat_maniosa)
+# Error in solve.default(mat_maniosa) :
+# Lapack routine dgesv: system is exactly singular: U[2,2] = 0
+```
++ Y por supuesto pasa lo que tiene que pasar con la inversa
+
+```{r}
+mat2_inversa <- solve(mat2)
+mat2 %*% mat2_inversa
+```
++ Oh! Qué sorpresa la matriz identidad
+
++ Hay otras dos funciones útiles cuando de matrices hablamos: apilar por renglones i.e. poner una matriz encima de otra (por supuesto si las dimensiones tienen que tener sentido) ocupo la función `rbind()`; apilar por columnas i.e. pegar una matriz junto a otra (por cupuesto si las dimensiones tienen sentido) ocupo la función `cbind()`
+
+```{r}
+mat1
+```
+
+```{r}
+mat2
+```
+
+```{r}
+rbind(mat1, mat2) #apilar por renglones las matrices mat1 y mat2
+```
+```{r}
+cbind(mat1, mat2) #apilar por columna las matrices mat1 y mat2
+```
+
++ No nos olvidemos del determinante
+
+```{r}
+mat1
+```
+
+```{r}
+det(mat1)
+```
+
+
+# Listas
+
++ Recordatorio: Los vectores y matrices son quisquillosos con que todos los elementos sean del mismo tipo. En caso de que haya un string, obliga al resto de las entradas a ser tipo string
+
++ Una **lista** en R es un objeto mucho más versátil, es relativamente génerico que consiste en una colección ordenada de objetos sin importar su naturaleza atómica.
+
++ Son estructuras de datos unidimensionales PERO heterogéneas. Las componentes pueden ser de diferente tipo.
+
++ Una lista puede ser una lista de vectores, una lista de matrices, una lista de funciones, o combinaciones de éstas.
+
++ A diferencia de un vector, en una lista puede haber objetos de diferente tipo. De hecho esa es su "magia"
+
++ Para crear una lista en `R` se usa la función `list()`
+
+```{r}
+# Creo un vector de números
+ID_estudiantes <- c(123, 456, 789, 369)
+
+# Creo un vector de strings
+nombres_estudiantes <- c("Julianna", "Felipe", "Verónica", "Federico")
+
+# Creo simplemente un número
+mi_numero_fav <- 7
+
+# Creo mi matriz favorita
+mi_matriz_fav <- rbind(mat1, mat2)
+```
+
++ Voy a meter a estos 4 objetos en una lista
+
+```{r}
+lista_estudiantes <- list(ID_estudiantes, nombres_estudiantes,
+                          mi_numero_fav, mi_matriz_fav)
+lista_estudiantes
+```
+
++ ¿Qué tipo de objeto es este?
+
+```{r}
+class(lista_estudiantes)
+```
+```{r}
+str(lista_estudiantes)
+```
+
++ Cómo se cuantos objetos tiene mi lista? Con la función ´length()´
+
+```{r}
+length(lista_estudiantes)
+```
++ Vamos a ver un poquito más de la estructura de la lista
+
+```{r}
+lista_estudiantes |> str()
+```
+
++ Dada una lista ¿cómo accedo a una de sus componentes? Eso es fácil Lalo, me suena a que debemos usar la notación de corchetes cuadradros `lista[entrada que quiero]`
+
++ Primera propuesta: [.]
+
+```{r}
+lista_estudiantes[2]
+```
++ ¿Qué diferencia tiene con esta instrucción?
+
+```{r}
+lista_estudiantes[[2]]
+```
+
++ Con [2] me devuelve la componente 2 de la lista
+
++ Con [[2]] me devuelve el objeto DENTRO de la componente 2 de la lista
+
++ Veamos qué tipo de objeto es lo que nos devuelve
+
+```{r}
+lista_estudiantes[2] |> class()
+```
+
+```{r}
+lista_estudiantes[[2]] |> class()
+```
+
+```{r}
+lista_estudiantes[4] |> class()
+```
+
+```{r}
+lista_estudiantes[[4]] |> class()
+```
+
++ Cuando uso solo un de corchetes [.] me devuelve una sub-lista, que por supuesto es una lista.
+
++ Cuando ocupo dos pares de corchetes [[.]] me devuelve el objeto dentro de la lista
+
++ Efectivamente, nuestro razonamiento fue correcto.
+
+HASTA AQUÍ NOS QUEDAMOS
+
+# Inicio de la clase del 5 de febrero
+
+```{r}
+lista_estudiantes[1:2]
+```
+
++ Me devuelve los componentes 1 hasta 2 de la lista
+
+```{r}
+lista_estudiantes[1:2] |> class()
+```
+
++ ¿La siguiente instrucción qué razonamiento tiene?
+
+```{r}
+lista_estudiantes
+```
+
+
+```{r}
+lista_estudiantes[[1:2]]
+```
+
+```{r}
+# Accedo a la entrada 1 de la lista, que es un vector
+# y como un vector tiene entradas, puede acceder a su entrada 2
+lista_estudiantes[[1]][2]
+```
+
+```{r}
+# Esta sintaxis suele fallar
+# lista_estudiantes[[1:4]]
+# Error in lista_estudiantes[[1:4]] : recursive indexing failed at level 2
+```
++ Pero una característica agradable de las listas es que les podemos asignar nombre a sus componente/entradas y además ese nombre es útil pues nos evita buscar por número de índice y mejor usamos el nombre.
+
+
+```{r}
+# Tiene las mismas componentes, sólo que las componentes tienen un nombre
+lista_estudiantes <- list("ID" = ID_estudiantes,
+                          "Nombre" = nombres_estudiantes,
+                          "Favorito" = mi_numero_fav)
+lista_estudiantes
+```
++ Con el operador `$` pueden acceder al objeto dentro de componente con el nombre que quieren:
+
+```{r}
+# Quiero acceder al vector de ID_estudiantes
+# Y tengo la ventaja de que éste ya tiene un nombre `ID`
+# lo puedo usar para acceder al objeto
+lista_estudiantes$ID
+```
++ Es decir, accedí al objeto dentro de la componente que tiene el nombre "ID"
+
+```{r}
+lista_estudiantes$Nombre
+# Es decir, accedí al objeto dentro de la componente que tiene el nombre "Nombre"
+```
+
+```{r}
+# Es decir, accedí al objeto dentro de la componente que tiene el nombre "Favorito"
+lista_estudiantes$Favorito
+```
+
++ Si quisera cambiar el objeto de la componente con nombre "Favorito" simplemente lo reasigno
+
+```{r}
+lista_estudiantes
+```
+
+```{r}
+lista_estudiantes$Favorito <- 10
+lista_estudiantes
+```
+
+WARNING: El operador de `$` tiene sus ventajas, pero nos obliga a ser muy muy muy ordenados al poner nombres
+
+```{r}
+# Tiene las mismas componentes, sólo que las componentes tienen un nombre
+lista_estudiantes <- list("ID" = ID_estudiantes,
+                          "Nombre" = nombres_estudiantes,
+                          "Favorito" = mi_numero_fav,
+                          "País de procedencia" = c("México", "EUA"))
+lista_estudiantes
+```
+
+```{r}
+# Para acceder a nombres que tienen espacios en su sintaxis se usa el nombre entre `.`
+lista_estudiantes$`País de procedencia`
+```
++ Me parece más limpia la siguiente sintaxis:
+
+```{r}
+# Tiene las mismas componentes, sólo que las componentes tienen un nombre
+lista_estudiantes <- list("ID" = ID_estudiantes,
+                          "Nombre" = nombres_estudiantes,
+                          "Favorito" = mi_numero_fav,
+                          "PaisProcedencia" = c("México", "EUA"))
+lista_estudiantes
+```
+
++ ¿Cómo accedo a la tercera entrada del vector con nombre "ID"?
+
++ Hay varias maneras...
+
+```{r}
+# Con el operador $
+lista_estudiantes$ID |> class()
+```
++ Ahhh!! Es un vector numérico y ya se cómo acceder a las entradas de un vector
+
+```{r}
+lista_estudiantes$ID[3]
+```
+Yei!! Lo logramos!!
+
++ Otra forma, con la notación de los dobles corchetes
+
+```{r}
+lista_estudiantes[[1]][3]
+```
++ Cómo se lee? Primero accedo al objeto dentro de la componente 1 (que es objeto que me interesa)
++ Luego, accedo a la entrada 3 de dicho objeto.
+
++ Podríamos cambiar la entrada 4 del objeto 2 (Recuerden que el objeto 2 es un vector de strings)
+
+```{r}
+# Primero accedo a la segunda componente de la lista
+# Luego accedo a la cuarta entrada de dicho componente
+lista_estudiantes[[2]][4] <- "Fulanasio"
+lista_estudiantes
+```
+
++ Veamos que es importante que sepamos qué objetos contiene la lista
+
+```{r}
+lista_estudiantes <- list("ID" = ID_estudiantes,
+                          "nombre_est" = nombres_estudiantes,
+                          "numerillo" = mi_numero_fav,
+                          "matriz_metiche" = mi_matriz_fav)
+lista_estudiantes
+```
+
++ Si no sé que en la entrada 4 hay una matriz y quiero hacer una operación de vector, por ejemplo, pues me va a mandar error
+
+```{r}
+lista_estudiantes$matriz_metiche[2]
+# Me devuelve algo que no sé si es lo que quiero
+```
+
+```{r}
+# Devuélveme todo lo que hay en la columna 2
+lista_estudiantes$matriz_metiche[,2]
+```
+
++ Moraleja: Hay que tener control sobre lo que hay en cada componente de la lista
+
++ La principal ventajas de las listas, que es su heterogeneidad; también es su peor defecto. Si no tenemos claro que hay en cada componente, estamos "ciegas".
+
++ ¿Cómo agrego una entrada/componente a una lista existente?
+
+```{r}
+lista_estudiantes
+```
+
++ Con la función concatenar que ya conocemos `c()` y dándole nombre al nuevo componente
+
+```{r}
+# Agrego una nueva componente que se llama "Apellidos"
+# que consiste de un vector de strings
+# Estoy creando y bautizando a la nueva componente al mismo tiempo
+# La estoy creando mientras la estoy bautizando
+lista_estudiantes$Apellidos <- c("Hernández", "López", "Pérez")
+```
+
+```{r}
+lista_estudiantes
+```
++ Por supuesto, la longitud de esta lista cambió
+
+```{r}
+length(lista_estudiantes)
+```
++ ¿Cómo uno dos listas existentes?
+
+```{r}
+lista_adicional <- list("Ubicacion" = c("CDMX", "Edomex"),
+                        "CodigoPostal" = c(1234,4567,8765))
+lista_adicional
+```
+
++ Pues también con la función concatenar `c()`
+
+```{r}
+# Estoy concatendo la primera lista con la segunda en ese orden
+lista_estudiantes2 <- c(lista_estudiantes, lista_adicional)
+lista_estudiantes2
+```
+
+```{r}
+length(lista_estudiantes2)
+```
+
++ Por supuesto, puedo unir una lista con más de una componente
+
+```{r}
+lista_adicional2 <- list("AnioIngreso" = c(2001, 2022, 2017),
+                         "Materias" = c("Matemáticas", "Física",
+                                               "Química", "Biología",
+                                               "Historia"),
+                         "MiMascota" = "Paquito")
+```
+
++ Y la concateno con la lista existente
+
+```{r}
+lista_estudiantes3 <- c(lista_estudiantes2, lista_adicional2)
+lista_estudiantes3
+```
+
++ ¿Cómo elimino una componente de una lista? Con el operador `-`
+
+
+```{r}
+# Como los corchetes simples acceden al índice de la lista, OJO no al objeto
+# Basta con decirle que elimie el índice deseado
+# quiero quitar la tercera componente de la lista
+lista_estudiantes[-3]
+```
+
++ El tipo lista es muy flexible y a veces hasta se abusa de esta flexibilidad.
+
++ Una situación cómun es que quieras un vector numérico PERO lo definas como lista
+
++ Objetivo: crear un VECTOR (1,5,6,9)
+
+```{r}
+lista_que_quiere_ser_vector <- list(1,5,6,9)
+lista_que_quiere_ser_vector 
+```
+
++ Esto no es lo que yo quería. Yo quiero un vector
+
++ Esta lista la puedo convertir en un vector con la función `unlist()`
+
+```{r}
+por_fin_soy_vector <- unlist(lista_que_quiere_ser_vector)
+por_fin_soy_vector
+```
+
+```{r}
+por_fin_soy_vector |> class()
+```
+
+```{r}
+por_fin_soy_vector |> str()
+```
+
+
++ Lo logré!!!
+
+Otra forma: Con la función `as.numeric()`
+
+```{r}
+as.numeric(lista_que_quiere_ser_vector)
+```
+
+```{r}
+lista_que_quiere_ser_vector <- as.numeric(lista_que_quiere_ser_vector)
+lista_que_quiere_ser_vector
+```
+
++ Lo mismo ocurre con las matrices
+
+```{r}
+lista_que_quiere_ser_matriz <- list(list(1, 2, 3), list(4, 5, 6))
+lista_que_quiere_ser_matriz
+```
++ Acá se hace en dos pasos: Primera se sacan las componentes de la lista y luego se convierten en matriz
+
+```{r}
+unlist(lista_que_quiere_ser_matriz)
+```
++ Y luego a este vector hecho y derecho, lo convertimos en matriz
+
+
+```{r}
+unlist(lista_que_quiere_ser_matriz) |> matrix(nrow = 2, byrow = TRUE)
+# el parámetro byrow significa que te las acomoda renglón tras renglón
+```
++ Vamos a ver qué pasa si lo cambio por FALSE:
+
+```{r}
+unlist(lista_que_quiere_ser_matriz) |> matrix(nrow = 2, byrow = FALSE)
+```
+
++ Empieza a rellenar pero por columna.
+
++ La función `unlist()` es noble pero no tanto
+
+```{r}
+mi_matriz <- matrix(c(3,8,9,5,7,8), ncol = 3, byrow = TRUE)
+mi_otro_num_fav <- 999
+mi_vector_fav <- c("Hola", "mundo")
+lista_mounstro <- list(mi_matriz, mi_otro_num_fav, mi_vector_fav)
+lista_mounstro
+```
+
++ ¿Qué pasa si aplico la función unlist a esta lista mixta?
+
+```{r}
+lista_mounstro |> unlist()
+```
++ Me "descompuso" a los objetos numéricos
+
+
+
+# Estructuras de control en R
+
++ Las estructuras de control en R permiten controlar el flujo de ejecución de una serie de expresiones en R.
+
++ Las estructuras de control permiten incorporar cierta "lógica" en tu código de R, en vez de ejecutar siempre el mismo código cada vez.
+
++ Estas estructuras te permiten responder a entradas o características de los datos y ejecutar diferentes expresiones de R en consecuencia.
+
++ Las estructuras de control más comúnmente utilizadas son:
+
++ if y else: Evalúa una condición y actúa de acuerdo a dicha condición.
+
++ for: Ejecutar un ciclo/bucle un número fijo (establecido) de veces.
+
++ while: Ejecuta un ciclo/bucle mientras una condición sea verdadera.
+
++ repeat: Ejecutar un ciclo/bucle infinito (se debe interrumpirlo para detenerlo).
+
++ break: Interrumpe la ejecución de un ciclo/bucle.
+
++ next: Omite una iteración de un ciclo/bucle.
+
+## Empecemos con el if
+
+```{r}
+# genero un número aleatorio entre el 0 y el 10
+x <- runif(n = 1, min=0, max=10)  
+x
+```
+
+```{r}
+if(x > 3) {
+        y <- 10
+} else {
+        y <- 0
+}
+
+y
+```
+
++ ¿Qué pasa si no pongo else?
+
+```{r}
+x = 1.077892
+if(x > 3) {
+        z <- 10
+}
+# z
+# Error: object 'z' not found
+```
+
++ Una ventaja de la sintaxis con {} es que hace que podamos escribir el código sin mucha estructura
+
+```{r}
+if(x > 3){y <- 10} else{y <- 0}
+
+y
+```
+
+## Ciclos/loops for
+
+```{r}
+for(i in 1:10) {
+  print(i)
+  }
+```
+
+```{r}
+x <- c("a", "b", "c", "d")
+
+for(i in 1:4) {
+  print(x[i])
+  }
+```
+
++ También se puede iterar sobre vectores de strings
+
+```{r}
+palabras <- c("ciencia", "datos", "estadística", "probabilidad", "flujo")
+
+for(x in palabras) {
+  print(x)
+  }
+```
+
+```{r}
+palabras <- c("ciencia", "datos", "estadística", "probabilidad", "flujo")
+
+for(x in palabras[1:3]) {
+  print(x)
+  }
+```
+
+
+```{r}
+mi_vector <- c(3,7,8,25)
+for(i in mi_vector){
+  print(i)
+}
+```
+
+
++ También podemos hacer que el objeto iterable sea una lista
+
+```{r}
+lista_estudiantes
+```
+
+```{r}
+for(componente in lista_estudiantes){
+  print(componente)
+}
+```
+
++ Una función muy útil en iteraciones es la función seq_along pues nos devuelve los índices de un vector.
+
+```{r}
+x <- c("a", "b", "c", "d")
+seq_along(x)
+```
+
+```{r}
+for(i in seq_along(x)) {
+  print(i)
+}
+```
+
+```{r}
+x <- matrix(1:6, 2, 3)
+x
+```
+
+```{r}
+seq_along(nrow(x))
+```
+
++ Una función prima-hermana es la función seq_len
+
+```{r}
+seq_len(8)
+```
+
+```{r}
+seq_len(nrow(x))
+```
+
+```{r}
+seq_len(ncol(x))
+```
+
+```{r}
+for(i in seq_len(nrow(x))) {
+        for(j in seq_len(ncol(x))) {
+                print(x[i, j])
+        }   
+}
+```
+
+## Sentencia while
+
++ Se ejecuta siempre y cuando la condición dada sea verdadera
+
+```{r}
+count <- 0
+
+while(count < 10) {
+  print(count)
+  count <- count + 1
+  }
+```
+
+```{r}
+count <- 0
+
+while(count < 10) {
+  print(count)
+  count <- count + 3
+  }
+```
+
++ La condición puede ser tan compleja como queramos
+
+```{r}
+z <- 6
+
+while(z >= 3 && z <= 10) {
+  print(paste("mi numero inicial es:", z))
+  coin <- rbinom(1, n = 1, p = 0.5) # tirando un volado de una moneda justa
+  # rbinom significa random binomial
+  # binomial(n,p) ----> número de éxitos en n ensayos volados
+  # p es la proba de éxito del volado
+  print(paste("mi volado salió:",coin))
+  if(coin == 1) {
+    z <- z + 1} else {
+      z <- z - 1}
+  print("....")
+  print(paste("mi z después del volado",z))
+  print("---")
+}
+```
++ Parentesis
+
+```{r}
+pegado <- paste("casita", TRUE, 3)
+print(pegado)
+```
+```{r}
+pegado <- paste0("casita", TRUE, 3)
+print(pegado)
+```
+
+## La sentencia next
+
++ Básicamente, se salta una iteración de un for basada en una condición if
+
+```{r}
+for(i in 1:10){
+  if(i <= 4) {
+    next}
+  print(paste("iteración número:",i))
+}
+```
+
+## La sentencia break
+
++ Termina un ciclo for basándose en una condición
+
+```{r}
+for(i in 1:100){
+  print(i)
+  if(i > 13){
+    break}     
+}
+```
+
++ En general, en R intentamos escribir lo menos posible ciclos explícitos, i.e. intentamos escribir lo menos posible la palaba `for`
+
++ R tiene algunas funciones optimizadas para ejecutar ciclos de más rápida que un `for` vainilla
+
++ En particular la librería {purrr} tiene muchas de estas funciones
+
+```{r}
+
+```
+
+
+
+```{r}
+numeros <- c(6, 2, 3, 8, 9)
+# Quiero aplicar la función x^2 a cada entrada del vector numeros
+# Mi primer intento si no supiera mucho R, pero sí programación básica
+# Sería con un for
+purrr::map(numeros, function(x) x^2)
+# libreria::funcion me permite usar la función sin haber hecho antes un library(libreria)
+# lo único que necesita es que sí este instalada la librería
+# Además, esta sintaxis hace explícito que estás usando la función map de 
+# la librería purrr y no la función map de otra librería
+```
+
+```{r}
+numeros <- c(6, 2, 3, 8, 9)
+resultado <- purrr::map(numeros, function(x) x^2)
+class(numeros)
+class(resultado)
+```
++ OJO: `map` me devuelve una lista. Más adelante vamos a obligar a que nos devuelva una vector
+
++ Aunque ahorita ya tienen al menos una manera de hacerlo: Con el unlist
+
+```{r}
+numeros <- c(6, 2, 3, 8, 9)
+resultado <- purrr::map(numeros, function(x) x^2)
+resultado <- unlist(resultado)
+resultado |> str()
+```
++ Ya me devuelve un vector, aunque en unos momentos veremos otra forma
+
++ Vamos a crear una lista de "tablas" (formalmente se llama un dataframe... más adelante estudiaremos esta estructura)
+
+```{r}
+lista_de_dfs <- list(
+  data.frame(a = c(1, 2, 3), b = c(4, 5, 6)),
+  data.frame(a = c(7, 8, 9), b = c(10, 11, 12)),
+  data.frame(a = c(13, 14, 15), b = c(16, 17, 18))
+)
+lista_de_dfs
+```
+
+```{r}
+# Voy a aplicar la función summary a cada tabla de esta lista
+purrr::map(lista_de_dfs, function(df) summary(df))
+```
+
+`map_dbl()`: Esta función es análoga a `map()`, pero en lugar de devolver una lista, produce un vector numérico. Lo hace aplicando una función específica a cada elemento de una lista y luego devolviendo un vector con la misma longitud que la lista de entrada, que contiene los resultados de dicha operación.
+
+```{r}
+numeros <- c(6, 2, 3, 8, 9)
+resultado <- purrr::map_dbl(numeros, function(x) x^2)
+str(numeros)
+str(resultado)
+```
+
++ La función `purrr::compose` nos ayuda a crear una nueva función que es una composición de funciones f o g (x)
+
+```{r}
+# Esta instrucción crea una función que es la composición de la raiz cuadr
+# con la función elevar a la cuarta potencia
+# Primero aplica la función elevar a la cuarta
+# Segundo aplica la función raíz cuadrada
+mi_funcion_compuesta <- purrr::compose(sqrt, function(x) x^4)
+class(mi_funcion_compuesta)
+```
+
+La voy a aplicar al número 5
+
+```{r}
+purrr::map_dbl(5, mi_funcion_compuesta)
+```
++ Por supuesto la podemos aplicar a un vector
+
+```{r}
+purrr::map_dbl(1:8, mi_funcion_compuesta)
+```
++ Otro ejemplo
+
+```{r}
+otra_funcion_compuesta <- purrr::compose(abs, sqrt)
+```
+
+```{r}
+purrr::map_dbl(c(9, 25, 81, -100, -144), otra_funcion_compuesta)
+```
+
+```{r}
+# Al revés
+otra_funcion_compuesta <- purrr::compose(sqrt, abs)
+```
+
+```{r}
+purrr::map_dbl(c(9, 25, 81, -100, -144), otra_funcion_compuesta)
+```
++ Por supuesto podemos componer más de 2 funciones
+
+```{r}
+otra_funcion_compuesta <- purrr::compose(function(x){x^3},sqrt, abs)
+```
+
+```{r}
+# Aplico mi nueva función al vector (9, 25,...)
+purrr::map_dbl(c(9, 25, 81, -100, -144), otra_funcion_compuesta)
+```
