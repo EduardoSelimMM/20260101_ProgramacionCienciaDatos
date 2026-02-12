@@ -1,6 +1,0 @@
----
-title: "Sesion 08"
-author: "Eduardo Martínez"
-date: "12 de Febrero"
-output: html_document
----
