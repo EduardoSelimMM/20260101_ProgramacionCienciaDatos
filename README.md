@@ -16,3 +16,4 @@
 - [Sesion 5: 5 de febrero de 2026](./sesion05)
 - [Sesion 6: 7 de febrero de 2026](./sesion06)
 - [Sesion 7: 10 de febrero de 2026](./sesion07)
+- [Sesion 8: 12 de febrero de 2026](./sesion08)
