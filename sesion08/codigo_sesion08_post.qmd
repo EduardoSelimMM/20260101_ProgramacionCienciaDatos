@@ -1,0 +1,731 @@
+---
+title: "Sesión 8"
+format: html
+editor: visual
+---
+
+# Dataframes en R
+
++ Los dataframes, son lo que conceptualizamos como tablas.
+
++ Es decir, se muestran en un formato de tabla.
+
++ Los dataframes en R pueden contener diferentes tipos de datos en su interior. Por ejemplo, la primera columna puede ser de tipo `character`, la segunda y la tercera pueden ser `numeric` o `logical`.... como estamos acostumbrados a que sea un sheet de EXCEL.
+
++ **Importante**: Sin embargo, cada columna debe tener el mismo tipo de datos: es decir, una columna puede tener sólo número, sólo carácteres y incluso puede ser un dataframe que dentro de éste tenga dataframes.
+
++ En el fondo, en corazoncito de R, un dataframe es una lista de R.
+
++ ¿Cómo creamos dataframes en R?
+
++ Hay varias formas... como siempre
+
++ Una de las clásicas es con la función `data.frame()`
+
+```{r}
+# Este es un dataframe que tiene 3 columnas y en principio 4 renglones
+mi_dataframe <- data.frame(
+  Paciente = c("Ariel", "Susana", "Oscar", "Alex"),
+  Pulso = c(100, 150, 120, 115),
+  Edad = c(60, 30, 45, 28)
+)
+
+mi_dataframe
+```
+
++ Veamos qué clase de objeto es el objeto `mi_dataframe`
+
+```{r}
+class(mi_dataframe)
+```
+
++ También podemos ver qué estructa tiene mi dataframe con la función `str` que ya hemos ocupado antes.
+
+```{r}
+str(mi_dataframe)
+```
+
++ Atributos clásicos que queremos saber de un dataframe es cuántas columnas tiene y cuántos renglones... Vamos a usar una función que ya hemos usado: `dim(.)`
+
+```{r}
+dim(mi_dataframe)
+# Primera entrada es el número de renglones
+# Segunda entrada es el número de columnas
+```
+
++ Podemos querer sólo el número de renglones
+
+```{r}
+nrow(mi_dataframe)
+```
+
++ o sólo el número de columnas
+
+```{r}
+ncol(mi_dataframe)
+```
++ Una característica importante de los dataframes es que sus columnas DEBEN (SÍ O SÍ TENER NOMBRE)
+
++ Podemos saber cuál es el nombre de nuestras columnas
+
+```{r}
+names(mi_dataframe)
+```
+```{r}
+# Crear un dataframe vía una matriz
+matrix(c(2, 5, 6, 7, 13, 66), nrow = 3, ncol = 2) |> data.frame()
+```
+
++ Automáticamente le pone los nombres X1 y X2
+
++ R tiene una función para darte un pequeño resumen del contenido de un dataframe: `summary()`
+
+```{r}
+summary(mi_dataframe)
+```
+
++ ¿Cómo accedo a las columnas de un dataframe?
+
++ Primera forma: Con la notación [.] i.e. por el número de columna
+
+```{r}
+# Accedo a la primera columna de mi dataframe
+mi_dataframe[1]
+# Recuerden que lo índices en R empiezan en 1
+```
+
++ ¿Porqué tanta insistencia con que las columnas tengan nombre? Porque me dejará acceder a las columnas usando el nombre
+
++ Una propiedad súper agradable de los dataframes es que puedes hacer hacer al NOMBRE de la(s) columna(s)
+
++ Segunda forma: Mediante el nombre de la columna
+
+```{r}
+mi_dataframe["Paciente"]
+```
+
+```{r}
+# Puedo seleccionar varias columnas a la vez
+mi_dataframe[c("Paciente", "Edad")]
+```
+
++ Dijimos que en el fondo de su corazón un dataframe es una lista. Hay diferencia entre el objeto columna de un dataframes y el contenido de una columna del dataframe
+
++ si quiero acceder a lo que está dentro de alguna columna ocupo la notación de [[.]]
+
+```{r}
+mi_dataframe["Paciente"]
+```
+
+```{r}
+mi_dataframe["Paciente"] |> class()
+```
+
+```{r}
+mi_dataframe[["Paciente"]]
+```
+
+```{r}
+mi_dataframe[["Paciente"]] |> class()
+```
+
++ Otra forma de acceder es con el operador `$`... que si recordamos, lo usamos cuando estudiamos listas
+
+```{r}
+# Me regresa el contenido de la columna 'Paciente'
+mi_dataframe$Paciente
+```
+
++ Por supuesto, podemos acceder a más de una columna:
+
++ Primera forma:
+
+```{r}
+mi_dataframe[c("Paciente","Edad")]
+```
+
++ Otra forma es indicando el número de las columnas que quiero
+
+```{r}
+mi_dataframe[c(2,3)] # quiero las columnas, 2 y 3
+```
+
++ También puedo acceder a una celda en particular. De nuevo usamos la sintaxis [i,j], i es renglón y j es columna
+
+```{r}
+mi_dataframe[2,3] # quiero la entrada que está en el segundo renglón y tercer columna
+```
+
++ Puedo acceder a subconjuntos de renglones y de columnas
+
+```{r}
+mi_dataframe[c(2,3,4),1:2] # los renglones de 2, 3 y 4 y las columnas de 1 a 2
+```
+
+```{r}
+mi_dataframe[c(1,3),c(2,3)] # Los renglones 1 y 3 y a las columnas 2  y 3
+```
++ También se puede acceder a las columnas por nombre
+
+```{r}
+mi_dataframe[3,c("Edad", "Pulso")] # renglón 3, de las columnas Edad y Pulso
+```
+
+```{r}
+mi_dataframe[2:3,c("Edad", "Pulso")] # renglón 2 hasta 3, de las columnas Edad y Pulso
+```
+
+```{r}
+# El orden en el que le pides las columnas los respeta
+mi_dataframe[2:3,c("Pulso", "Edad")] # renglón 2 hasta 3, de las columnas Edad y Pulso
+```
+
+```{r}
+mi_dataframe[c(1,3),c("Edad", "Pulso")] # renglón 1 y 3, de las columnas Edad y Pulso
+```
+
+```{r}
+mi_dataframe["Paciente"] == "Susana"
+```
+```{r}
+mi_dataframe[mi_dataframe["Paciente"] == "Susana"]
+```
+
+```{r}
+mi_dataframe[mi_dataframe["Paciente"] == "Susana", "Pulso"]
+```
+
++ ¿Cómo inserto nuevos renglones a un dataframe existente?
+
++ Una forma es con la función `rbind()` (apilar por renglones), i.e. apilando (poniendo uno encima de otro) por renglones
+
+```{r}
+nuevo_renglon <- c("Daniel", 110, 45)
+nuevo_renglon
+```
+
+```{r}
+mi_dataframe <- rbind(mi_dataframe, nuevo_renglon) # Pego en la parte de abajo al nuevo renglón
+```
+
+```{r}
+mi_dataframe
+```
++ Esta manera funciona pero nos descompuso el tipo de datos de cada columna
+
++ ¿Cómo lo arreglamos?
+
+```{r}
+mi_dataframe$Pulso <- as.numeric(mi_dataframe$Pulso)
+```
+
+```{r}
+mi_dataframe
+```
+```{r}
+mi_dataframe$Edad <- as.numeric(mi_dataframe$Edad)
+```
+
+```{r}
+mi_dataframe
+```
++ Agreguemos otro renglón de otra manera
+
+```{r}
+nuevo_renglon <- c(NA, NA, NA)
+mi_dataframe <- rbind(mi_dataframe, nuevo_renglon)
+mi_dataframe
+```
+```{r}
+mi_dataframe$Paciente[6] <- "Gomita"
+```
+
+```{r}
+mi_dataframe
+```
+
++ Puedo insertar un renglón en una posición que yo quiera? Sí
+
+# Pendiente, con lo verbos del dplyr será más fácil
+
+```{r}
+nuevo_renglon2 <- c("Eduardo", 120, 75)
+```
+
+```{r}
+mi_dataframe
+```
+
++ ¿Cómo creo nuevas columnas en un dataframe existente?
+
++ Una forma es con la función `cbind()` (apilar por columna) apilando pero ahora por columnas
+
+```{r}
+nueva_columna <- c(2,5,NA,2,1,8)
+```
+
+```{r}
+# Aplico la función cbind()
+mi_dataframe <- cbind(mi_dataframe, nueva_columna)
+```
+
+```{r}
+mi_dataframe
+```
+
++ Oye, pero que feo nombre tiene la nueva columna
+
+```{r}
+names(mi_dataframe)
+```
+
++ Puedo cambiar el nombre de esa columna a uno que me guste más
+
+```{r}
+names(mi_dataframe)[4] <- "NumHijos" # De los nombres de mi dataframe quiero cambiar el 4to
+```
+
+```{r}
+mi_dataframe
+```
+
++ Otra manera de crear nuevas columnas es insertándola y bautizándola al mismo tiempo con el operador `$`
+
+```{r}
+# Estoy definiendo una nueva columna que se llama Estatura y contiene esos números
+mi_dataframe$Estatura <- c(180, 167, 171, 175, 159, 1.95)
+```
+
+```{r}
+mi_dataframe
+```
++ Como me equivoqué al imputar el valor, lo voy a repetir
+
+```{r}
+mi_dataframe$Estatura <- c(180, 167, 171, 175, 159, 195)
+```
+
+```{r}
+mi_dataframe
+```
+
++ También puedo convertir una matriz en un dataframe
+
+```{r}
+# Esta es la matriz que quiero convertir a dataframe
+matriz <- matrix(1:12, ncol = 4)
+matriz
+```
++ Le aplico la función `as.data.frame`
+
+```{r}
+otro_df <- as.data.frame(matriz)
+otro_df
+```
++ ¿Qué tipo de objeto es este?
+
+```{r}
+class(otro_df)
+```
+
++ Hay algunas librerías que además de funciones contienen datasets en forma de dataframes
+
++ En la librería {ggplot2movies} simplemente hay un dataframe con información de algunas películas
+
+```{r}
+#install.packages("ggplot2movies")
+```
+
+
+```{r}
+# Mando llamar las funcionalidades de la librería
+library(ggplot2movies)
+```
+
++ El dataframe en esta librería se llama `movies`
+
+```{r}
+movies
+```
+
++ ¿De qué tipo es el objeto con nombre `movies`?
+
+```{r}
+class(movies)
+```
+
+```{r}
+#data()
+```
+
++ ¿Cuántas columnas y cuántos renglones tiene este dataframe?
+
+```{r}
+dim(movies)
+```
+
++ Tiene 58,788 renglones y 24 columnas
+
++ ¿Qué estructura tiene este dataframe?
+
+```{r}
+str(movies)
+```
++ A todo esto... ¿qué información tiene ese dataframe?
+
+```{r}
+# Se me hace que tengo que pedir ayuda
+help(movies)
+```
+
++ Veamos un extracto de dicho dataframe.. para esto ocuparemos la función `head()`, nos muestra los primero 6 renglones del dataframe
+
+```{r}
+movies |> head()
+```
+
++ ¿Qué pasa si quiero que me muestre una cantidad diferente de renglones?
+
+```{r}
+movies |> head(n = 10) # Le indico que quiero ver los primeros 10 renglones
+```
+
++ ¿Qué creen que haga esta instrucción?
+
+```{r}
+movies |> tail()
+```
+
++ Muestra los últimos 6 renglones del dataframe
+
++ Vamos a trabajar un poquito con este dataframe
+
+```{r}
+# A mí me gusta asignar un objeto que no es mío
+# A uno mío, para poder menearle
+datos <- movies
+```
+
+```{r}
+datos |> head(n = 10)
+```
+
+```{r}
+datos |> tail(n = 10)
+```
+
++ Una manera de acceder a un rango de renglones no necesariamente los últimos o los primeros es con la función `slice`
+
++ Como voy a ocupar un operador de pipa `%>%` (un hermano cercado del operado `|>`) de la librería {dplyr} tengo que mandar llamar a esa librería
+
+```{r}
+library(dplyr)
+```
+
+```{r}
+datos %>% dplyr::slice(25:42) # los renglones del 25 al 42
+```
+
++ La librería {dplyr} es una librería muy popular para trabajar con dataframes porque tiene una sintaxis super noble. Aunque tiene muchísimas funciones, las 5 básicas (que se conocen como "verbos del dplyr") son
+
++ arrange(): Ordena la tabla en función a alguna o algunas de las columnas
++ select(): Selecciona alguna o algunas columnas que el usuario le pida
++ filter(): Filtra los renglones que satisfacen alguna condición dada por el usuario
++ join() (left_join, inner_join, outer_join): Permite unir dataframes
++ group_by(): Agrupa el dataframe mediante algunas variables para poder hacer resumenes. Casi siempre viene acompañada de la función `summarize()`
+
+```{r}
+datos[,c("Action", "Animation")]
+```
+
+```{r}
+datos |> dplyr::select(Action, Animation)
+```
+
+# Dataframes in Python (Pandas)
+
++ Un `DataFrame` (de pandas) es una estructura de datos tabular (filas x columnas)
++ Piensen en una tabla SQL
++ Piense en un data.frame de R
++ Sheet de Excel/Google Sheets
++ Conceptualmente un diccionario de columnas.
++ Cada columna tiene un nombre y un tipo de datos, y cada fila tiene un índice.
++ Bidimensional (filas y columnas)
++ Columnas etiquetadas
++ Indexación flexible, i.e. uso de la sintaxis [,]
+
++ Vamos a insertar un chunk de Python muy sencillo
+
+```{python}
+print(1+4)
+```
+
++ Todo lo que podemos hacer en Python base (i.e. sin instalar alguna librería adicional) se puede sin drama en Quarto.
+
++ Pero si queremos instalar alguna librería para usar una función dentro de esa librería, tengo que hacer una maroma: Es crear un enviroment de Python desde R
+
++ Y como el objeto DataFrame es nativo de la librería de Python {pandas} tengo que hacer esa maroma
+
+
+```{r}
+#install.packages("reticulate")
+library(reticulate)
+# Se crea un  virtual environment
+virtualenv_create("myenv2") 
+# Se indica que en esta sesión de R
+# Se usará en enviroment 'myenv'
+use_virtualenv("myenv2", required = TRUE) 
+```
+
+```{r}
+# Vamos a instalar la librería pandas con sintaxis R
+# en el enviromente que acabamos de crear
+# pip install
+# conda
+# forge
+py_install("pandas")
+```
+
+```{python}
+# Mandamos llamas la librería que acabamos de instalar
+import pandas as pd
+#Hablar sobre la convención estándar pd
+# pd es un alias
+```
+
++ Desde aquí empezaremos a tirar Python como estamos acostumbradxs
+
++ ¿Cómo creamos un pandas DataFrame?
+
++ Hay varias maneras
+
+```{python}
+# un diccionario de listas
+# Si no le hubieran puesto un alias a pandas
+# pandas.DataFrame....
+mi_df = pd.DataFrame({
+    "nombre": ["Ana", "Luis", "María"],
+    "edad": [30, 25, 40],
+    "ciudad": ["CDMX", "MTY", "GDL"]
+})
+mi_df
+```
++ Otra manera
+
+```{python}
+# A partir de una lista de diccionarios
+mi_df = pd.DataFrame([
+    {"nombre": "Ana", "edad": 30},
+    {"nombre": "Luis", "edad": 25}
+])
+mi_df
+```
+
+```{python}
+# Mediante listas de listas
+mi_df = pd.DataFrame(
+    [[1, 2], [3, 4]],
+    columns=["A", "B"]
+)
+mi_df
+```
+
+```{python}
+#pd.read_csv("archivo.csv")
+#pd.read_excel("archivo.xlsx")
+#pd.read_parquet("archivo.parquet")
+```
+
+```{python}
+mi_df_externo = pd.read_csv("NetflixDailyTop10.csv")
+```
+
+```{python}
+mi_df_externo
+```
+
++ Voy a hacer el DataFrame un poquito más interesante
+
+```{python}
+mi_df = pd.DataFrame({
+    "nombre": [
+    "Ana", "Luis", "María", "Carlos", "Sofía",
+    "Jorge", "Lucía", "Miguel", "Paula", "Andrés",
+    "Elena", "Raúl", "Valeria", "Diego", "Carmen"
+],
+    "edad": [
+    18, 22, 25, 29, 31,
+    34, 37, 40, 43, 45,
+    48, 50, 53, 56, 60
+],
+    "ciudad": [
+    "CDMX", "NL", "JAL", "QRO", "PUE",
+    "JAL", "SON", "CHIH", "YUC", "OAX",
+    "GTO", "SLP", "CDMX", "VER", "AGS"
+]
+})
+mi_df
+```
+
++ Como siempre... ¿Qué cosas queremos saber de este nuevo objeto?
+
+```{python}
+mi_df.shape
+# (filas, columnas)
+```
+
+```{python}
+# Nombres de columnas
+mi_df.columns
+```
+
+-   **OJO:** `object` no es un tipo real, suele significar "mezcla o string".
+
+```{python}
+# Índices de las filas
+# Los índices son metadatos que guardan la posición de las filas
+mi_df.index
+```
+
+```{python}
+# tipo de cada columna
+mi_df.dtypes
+```
+
+```{python}
+# Los primeros renglones de df
+mi_df.head()
+```
+
+```{python}
+# Los primeros renglones de df
+mi_df.head(7)
+```
+
++ Un vistazo a los últimos renglones
+
+```{python}
+mi_df.tail()
+```
+
+```{python}
+mi_df.info()
+```
+
+```{python}
+# Me devuelve estádisticas descriptivas de las columnas numéricas
+mi_df.describe()
+```
+
++ ¿Qué pasa si queremos una descripción de las que no son numéricas?
+
+```{python}
+mi_df.describe(include = "object")
+```
+
+```{python}
+mi_df.describe(include = "str")
+```
+
+```{python}
+mi_df.describe(include = "all")
+```
+
++ ¿Cómo accedo a columnas del DataFrame?... Sintaxis [.]
+
+```{python}
+mi_df["edad"]
+```
+
+```{python}
+mi_df.edad
+```
+
+
+```{python}
+# No le gusta la notación simple para acceder a columnas por indice
+#mi_df[1]
+```
+
++ ¿Cómo accedo a renglones?
+
+```{python}
+# Accedo al renglón con índice 1
+mi_df.loc[1]
+```
++ ¿Cómo selecciono una celda en particular?
+
+```{python}
+mi_df.loc[1, "edad"]
+```
+
++ Si queremos a fuerza acceder a columnas por número de índice, usamos la función iloc()
+
+```{python}
+# Primer renglón de la columna 2
+mi_df.iloc[0, 1]
+```
+
++ También se puede usar la notación [[.]]
+
+```{python}
+# Podemos acceder a varias columnas por nombre a la vez
+mi_df[["nombre", "edad"]]
+```
+
++ Podemos crear nuevas columnas a partir de las ya existentes
+
++ Se hace bautizando y creando al mismo tipo
+
+```{python}
+# Estoy creando la columna 'edad_doble'
+# Al mismo tiempo que la estoy definiendo
+mi_df["edad_doble"] = mi_df["edad"] * 2
+```
+
+Cómo se ve nuestro DataFrame
+
+```{python}
+mi_df
+```
+
+```{python}
+# Podemos filtrar renglones por auto-referercia
+mi_df[mi_df["edad"] > 30]
+```
+
++ Por supuesto, se pueden agregar condiciones múltiples
+
+```{python}
+mi_df[(mi_df["edad"] > 25) & (mi_df["ciudad"] == "CDMX")]
+```
+
+```{python}
+# Crear una columna basada en una condición
+mi_df["mayor_edad"] = mi_df["edad"] >= 21
+```
+
+```{python}
+mi_df
+```
+
+```{python}
+# Tambié podemos cambiar el valor de una celda por auto-referencia
+mi_df.loc[mi_df["nombre"] == "Ana", "edad"] = 31
+```
+
++ Veamos cómo quedó el DF
+
+```{python}
+mi_df
+```
+
+```{python}
+# Crear una columna basada en una condición
+mi_df["mayor_edad"] = mi_df["edad"] >= 18
+```
+
+```{python}
+mi_df
+```
+
